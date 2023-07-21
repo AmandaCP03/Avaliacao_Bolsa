@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>D3JS</title>
+  <script src="https://d3js.org/d3.v6.min.js"></script>
+  <style>
+        body{
+            padding-top:20px; 
+            background-color: rgb(238, 237, 237);
+            font-family:Verdana, Geneva, Tahoma, sans-serif;
+            color:rgb(102, 102, 102);
+        }
+        .chart{
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+        }
+        .chart2{
+            background-color: rgb(254, 254, 254);
+            box-shadow: 5px 5px 5px rgb(168, 168, 168);
+        }
+        .descricao{
+            height: 20vh;
+        }
+        .descricao p{
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+        }
+        .descricao h2{
+            margin-left: 20%;
+        }
+  </style>
+</head>
+<body>
+    <div class="descricao">
+        <h2>Clothes</h2>
+        <p>Quantity of clothes by category, according to the data.</p>
+    </div>
+    <div class="chart">
+        <div id="chart" class="chart2"> </div>
+    </div>
+
+    <script>
+        const data = [
+        { Category: "Trousers", Quantity: 58 },
+        { Category: "Skirts", Quantity: 42 },
+        { Category: "Blouses", Quantity: 109 },
+        { Category: "Sale", Quantity: 108 }
+        ];
+
+        const width = 400;
+        const height = 300;
+        const margin = { top: 20, right: 20, bottom: 40, left: 40 };
+        const chartWidth = width - margin.left - margin.right;
+        const chartHeight = height - margin.top - margin.bottom;
+
+        const svg = d3.select("#chart")
+        .append("svg")
+        .attr("width", width)
+        .attr("height", height);
+
+        const xScale = d3.scaleBand()
+        .domain(data.map(d => d.Category))
+        .range([margin.left, width - margin.right])
+        .padding(0.1);
+
+        const yScale = d3.scaleLinear()
+        .domain([0, d3.max(data, d => d.Quantity)])
+        .range([height - margin.bottom, margin.top]);
+
+        svg.append("g")
+        .attr("transform", `translate(0, ${height - margin.bottom})`)
+        .call(d3.axisBottom(xScale));
+
+        svg.append("g")
+        .attr("transform", `translate(${margin.left}, 0)`)
+        .call(d3.axisLeft(yScale));
+
+        svg.selectAll(".bar")
+        .data(data)
+        .enter()
+        .append("rect")
+        .attr("class", "bar")
+        .attr("x", d => xScale(d.Category))
+        .attr("y", d => yScale(d.Quantity))
+        .attr("width", xScale.bandwidth())
+        .attr("height", d => chartHeight - yScale(d.Quantity))
+        .attr("fill", "rgb(113, 171, 247)");
+
+    </script>
+</body>
+</html>
