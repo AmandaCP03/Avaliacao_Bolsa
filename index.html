@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Chart</title>
+    <style>
+        body{
+            padding-top:20px; 
+            background-color: rgb(238, 237, 237);
+            font-family:Verdana, Geneva, Tahoma, sans-serif;
+            color:rgb(102, 102, 102);
+        }
+        .chart{
+            height: 50vh;
+            border-radius: 5px;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+        }
+        .chart2{
+            background-color: rgb(254, 254, 254);
+            box-shadow: 5px 5px 5px rgb(168, 168, 168);
+        }
+        .descricao{
+            height: 20vh;
+        }
+        .descricao p{
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+        }
+        .descricao h2{
+            margin-left: 20%;
+        }
+    </style>
+</head>
+<body>
+    <div class="descricao">
+        <h2>Clothes</h2>
+        <p>Quantity of clothes by category, according to the data.</p>
+    </div>
+    <div class="chart">
+        <canvas id="myChart" class="chart2"></canvas>
+      </div>
+      
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+      
+      <script>
+        const ctx = document.getElementById('myChart');
+      
+        new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: ['Trousers', 'Skirts', 'Blouses', 'Sale'],
+            datasets: [{
+              label: 'page 2 (clothing model)',
+              data: [58, 42, 109, 108, 2, 3],
+              borderWidth: 1
+            }]
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+        });
+      </script>
+      
+</body>
+</html>
